@@ -15,6 +15,9 @@ jobs:
       matrix:
         os: [macos-latest, ubuntu-latest]
         python: ["3.9", "3.13"]
+        exclude:  # current Ubuntu runner images no longer provide Python 3.9; macOS covers it
+          - os: ubuntu-latest
+            python: "3.9"
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
