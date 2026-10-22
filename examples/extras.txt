@@ -1,0 +1,3 @@
+# one URL per line
+https://example.org/reports/annual-2025.pdf
+https://example.com/handbook.pdf

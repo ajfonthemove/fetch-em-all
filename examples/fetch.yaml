@@ -1,0 +1,43 @@
+# Example config: copy it, point the sources at your own URLs, then
+#   fetch-em-all plan fetch.yaml --list    # check what will be fetched
+#   fetch-em-all run fetch.yaml --limit 1  # smoke test
+#   fetch-em-all run fetch.yaml
+# Quote any URL that contains " #" (YAML would treat the rest as a comment).
+
+out: ~/Documents/fetched          # every dest is relative to this
+browser: chrome                   # chrome | chrome-beta | chrome-canary | edge | brave
+pace_seconds: 2                   # pause between files
+fallback_pace_seconds: 5          # between requests to web.archive.org (faster gets you blocked)
+downloads_dir: ~/Downloads        # where the browser saves files
+port: 8765                        # allow http://127.0.0.1:8765 for multiple downloads in the browser
+
+sources:
+  # URLs listed inline: strings, or {url, dest, fallback}.
+  # arXiv links have no .pdf in the address, so the template adds it; the extension
+  # also tells fetch-em-all what kind of file to expect.
+  - name: papers
+    dest: "papers/{file_name}.pdf"
+    urls:
+      - https://arxiv.org/pdf/1706.03762
+      - url: https://arxiv.org/pdf/2005.14165
+        dest: papers/gpt3.pdf
+
+  # A CSV manifest; any column can be used in the dest template
+  - name: course
+    from: course.csv
+    url_column: url
+    fallback_column: archived     # optional: fetched directly if the browser gets nothing
+    where: {kind: notes}          # optional: keep rows whose column equals a value (or one of a list)
+    dest: "course/{week}/{file_name}"
+
+  # One URL per line, '#' starts a comment
+  - name: extras
+    from: extras.txt
+    dest: "extras/{host}/{file_name}"
+
+  # Links from a page you saved in the browser (File > Save Page As > Webpage, HTML Only)
+  # - name: saved-page
+  #   from_html: "~/Downloads/Teaching.html"
+  #   base_url: https://example.edu/teaching
+  #   match: '\.pdf$'
+  #   dest: "teaching/{file_name}"
