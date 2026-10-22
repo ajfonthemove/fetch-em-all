@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/banner.png" width="720" alt="Fetch 'Em All: a scruffy grey dog in a woolly coat carrying a blue download folder full of photos, a book, film, a record and a globe">
+</p>
+
 # Fetch 'Em All
 
 Download a list of URLs **through your own browser** on macOS, in the background, one file at a time, filed into
