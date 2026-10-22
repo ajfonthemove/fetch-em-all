@@ -151,7 +151,8 @@ AGENTS.md
 - **Manual smoke test**, only with the human's go-ahead: `--limit 1`, then `--limit 3`, while sampling the frontmost
   app every 0.1 s with `lsappinfo`. Expected: one switch to the browser lasting under half a second at the start and
   none afterwards; the user's active tab and tab count unchanged at the end; files filed; nothing left in Downloads.
-- CI: a macOS runner can run the offline tests; it cannot run the smoke test.
+- CI runs the offline tests on Ubuntu only. Do not add macOS runners (cost); they could not run the smoke
+  test anyway.
 
 ## One-time setup on a Mac (the human does these)
 

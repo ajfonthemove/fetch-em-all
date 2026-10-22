@@ -10,15 +10,12 @@ permissions:
 
 jobs:
   test:
+    # Ubuntu only: macOS runners are deliberately not used (cost). The offline tests are platform-independent.
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-latest, ubuntu-latest]
-        python: ["3.9", "3.13"]
-        exclude:  # current Ubuntu runner images no longer provide Python 3.9; macOS covers it
-          - os: ubuntu-latest
-            python: "3.9"
-    runs-on: ${{ matrix.os }}
+        python: ["3.10", "3.13"]
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
