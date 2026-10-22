@@ -106,7 +106,8 @@ Rules:
 - `from` paths resolve relative to the config file; `~` expands. File type comes from the extension: `.csv`, `.tsv`,
   `.txt`, `.json`, or `.jsonl`.
 - `dest` templates may use any column of the source row, plus `{host}`, `{path}`, `{file_name}` (URL-decoded last path
-  segment) and `{n}` (1-based index within the source). Sanitize every path component: no separators, no control
+  segment) and `{n}` (1-based index within the source). A non-empty row column wins over a derived field of the same
+  name. Sanitize every path component: no separators, no control
   characters, bounded to 150 bytes.
 - Validate the whole config before opening anything: unknown keys, missing files, unknown columns, duplicate
   destinations (compare case-insensitively; macOS volumes usually are), and URLs that are not `http(s)`. Report every

@@ -177,6 +177,16 @@ class Destinations(unittest.TestCase):
         self.assertEqual([str(j.dest) for j in jobs], ["a.pdf", "b.pdf"])
 
 
+class ColumnPrecedence(Workspace):
+    def test_row_columns_win_over_url_fields(self):
+        self.write("m.csv", "url,file_name\nhttps://ex.org/file_url/234,notes.pdf\nhttps://ex.org/b.pdf,\n")
+        _, jobs = self.load("""
+            out: d
+            sources: [{name: m, from: m.csv, dest: "x/{file_name}"}]
+            """)
+        self.assertEqual([str(j.dest) for j in jobs], ["x/notes.pdf", "x/b.pdf"])  # empty: the URL's name is used
+
+
 class JsonSource(Workspace):
     def test_json_list_of_objects(self):
         self.write("l.json", json.dumps([{"link": "https://ex.org/a.pdf", "n": 1}, "https://ex.org/b.pdf"]))

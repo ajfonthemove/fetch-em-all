@@ -94,8 +94,9 @@ Each source has a unique `name` and exactly one of:
 
 Optional on any source:
 - **`dest`**: a destination template, default `{source}/{file_name}`. Fields are any column of the row, plus
-  `{source}`, `{host}`, `{path}`, `{file_name}`, `{stem}`, `{ext}` and `{n}` (position within the source). Each path
-  component is sanitized and can't escape `out`.
+  `{source}`, `{host}`, `{path}`, `{file_name}`, `{stem}`, `{ext}` and `{n}` (position within the source), derived from
+  the URL. A non-empty column with one of those names wins, so a manifest's own `file_name` is used for redirect links
+  like `/file_url/234`. Each path component is sanitized and can't escape `out`.
 - **`where`**: keep only rows whose column equals a value (or one of a list).
 - **`match`**: a regular expression URLs must match.
 

@@ -214,7 +214,9 @@ def expand(raw_sources, base_dir, only=None):
             if urllib.parse.urlparse(url).scheme not in ("http", "https"):
                 problems.append(f"{label}: row {n}: not an http(s) URL: {url!r}")
                 continue
-            values = {**{k: str(v) for k, v in row.items()}, **url_fields(url, n), "source": name}
+            # the row's own non-empty columns win over fields derived from the URL (e.g. a manifest's file_name)
+            derived = url_fields(url, n)
+            values = {**derived, **{k: str(v) for k, v in row.items() if str(v) or k not in derived}, "source": name}
             try:
                 dest = render_dest(str(row.get("dest") or template), values)
             except KeyError as e:
